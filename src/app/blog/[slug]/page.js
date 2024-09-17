@@ -35,7 +35,9 @@ export const generateMetadata = async ({ params }) => {
     }
   ];
 
-  const post = posts.filter((p) => p.id === slug);
+  const post = posts.filter(function (e) {
+    return e.id.toString() === slug;
+  })[0];
 
   return {
     title: post.title,
@@ -77,7 +79,9 @@ export default function SinglePostPage({ params }) {
     }
   ];
 
-  const post = posts.filter((p) => p.id === slug);
+  const post = posts.filter(function (e) {
+    return e.id.toString() === slug;
+  })[0];
 
   return (
     <div className={styles.container}>
