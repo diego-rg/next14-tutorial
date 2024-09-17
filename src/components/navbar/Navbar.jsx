@@ -1,10 +1,13 @@
 import Links from "./links/Links";
+import styles from "./navbar.module.css";
 
 export default function Navbar() {
     return (
-        <div>
-            <h2>Logo</h2>
-            <Links />
+        <div className={styles.container}>
+            <div>Logo</div>
+            <div>
+                <Links />
+            </div>
         </div>
     );
 }

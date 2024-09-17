@@ -1,6 +1,10 @@
-import Link from "next/link";
+import styles from "./links.module.css";
+import NavLink from "./navLink/NavLink";
 
 export default function Links() {
+    const session = true;
+    const isAdmin = true;
+
     const links = [
         {
             title: "Homepage",
@@ -21,9 +25,9 @@ export default function Links() {
     ];
 
     return (
-        <div>
+        <div className={styles.links}>
             {links.map((link) => (
-                <Link href={link.path} key={link.title}>{link.title}</Link>
+                <NavLink item={link} key={link.title} />
             ))}
         </div>
     );
