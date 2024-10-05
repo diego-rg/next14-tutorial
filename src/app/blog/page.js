@@ -1,37 +1,26 @@
 import PostCard from "@/components/postCard/postCard";
 import styles from "./blog.module.css";
 
-export default function BlogPage() {
-  const posts = [
-    {
-      id: 1234,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 1",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1235,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 2",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1236,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 3",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1237,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 4",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    }
-  ];
+// FETCH DATA WITH AN API
+const getData = async () => {
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return res.json();
+};
+
+
+
+export default async function BlogPage() {
+
+  // FETCH DATA WITH AN API
+  const posts = await getData();
+
+  // FETCH DATA WITHOUT AN API
+  // const posts = await getPosts();
 
   return (
     <div className={styles.container}>

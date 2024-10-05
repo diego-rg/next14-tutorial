@@ -1,87 +1,21 @@
 import Image from "next/image";
 import styles from "./singlePost.module.css";
 
-export const generateMetadata = async ({ params }) => {
-  const { slug } = params;
+// FETCH DATA WITH AN API
+const getData = async (slug) => {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
 
-  const posts = [
-    {
-      id: 1234,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 1",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1235,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 2",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1236,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 3",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1237,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 4",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    }
-  ];
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
 
-  const post = posts.filter(function (e) {
-    return e.id.toString() === slug;
-  })[0];
-
-  return {
-    title: post.title,
-    description: post.desc,
-  };
+  return res.json();
 };
 
-export default function SinglePostPage({ params }) {
+export default async function SinglePostPage({ params }) {
   const { slug } = params;
 
-  const posts = [
-    {
-      id: 1234,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 1",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1235,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 2",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1236,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 3",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    },
-    {
-      id: 1237,
-      img: "/about.png",
-      createdAt: "2024-03-02 15:05:55",
-      title: "Post 4",
-      body: "Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1 Lorem blablabla 1"
-    }
-  ];
-
-  const post = posts.filter(function (e) {
-    return e.id.toString() === slug;
-  })[0];
+  const post = await getData(slug);
 
   return (
     <div className={styles.container}>
@@ -92,14 +26,6 @@ export default function SinglePostPage({ params }) {
       )}
       <div className={styles.textContainer}>
         <h1 className={styles.title}>{post.title}</h1>
-        <div className={styles.detail}>
-          <div className={styles.detailText}>
-            <span className={styles.detailTitle}>Published</span>
-            <span className={styles.detailValue}>
-              {post.createdAt.toString().slice(4, 16)}
-            </span>
-          </div>
-        </div>
         <div className={styles.content}>{post.desc}</div>
       </div>
     </div>
